@@ -49,6 +49,7 @@ def plot_3d_matrix(w_norm, p1):
     z_low = 0.1 * 5000 * p1   # lower bound
     ...
 
+```
 
 ## Citation
 
