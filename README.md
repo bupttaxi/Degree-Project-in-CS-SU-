@@ -52,7 +52,7 @@ def plot_3d_matrix(w_norm, p1):
 ```
 
 
-## Saliency Map for preset number of images in specific category and predicted class
+## Generating Saliency Map for preset number of images in specific category and predicted class
 
 Use the function below to define by yourself
 ```python
