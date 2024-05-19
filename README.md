@@ -18,7 +18,6 @@ This thesis employs the ResNet-18 architecture for image classification on the C
 
 To run this code, you may need the following libraries or modules:
 
-```python
 - tensorflow
 - numpy
 - matplotlib.pyplot
