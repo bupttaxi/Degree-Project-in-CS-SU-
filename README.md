@@ -1,6 +1,6 @@
 # CIFAR-10 Classification Task Based on ResNet-18 and D-RISE Salience Map Analysis
 
-This repository is for the degree project in CS (SU) 2024 spring semester.
+This repository is for the codes from my bachelor degree project in CS (SU) 2024 spring semester.
 
 ## Abstract
 
