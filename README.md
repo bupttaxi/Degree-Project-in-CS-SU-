@@ -29,32 +29,26 @@ GPU computing is recommended to reduce the training time. When you run this code
 
 ## Defining Similarity Score
 
-You can define different methods to calculate similarity score e.g.
+You can define different methods to calculate the similarity score, e.g., using cross-entropy as similarity score
 
-    '''python
+```python
+def similarity_calculation(proposals, selected_label):
+    """
+    DRISE 3: generating the similarity score using cross entropy
+    """
+    cross_entropy_loss = -np.sum(selected_label * np.log(proposals + 1e-9), axis=1)  # 加上一个小的epsilon防止对0取对数
+    return cross_entropy_loss.tolist()
 
-    def similarity_calculation(proposals, selected_label):
-    
-        """
-        DRISE 3: generating the similarity score using cross entropy
-        """
-    
-        cross_entropy_loss = -np.sum(selected_label * np.log(proposals + 1e-9), axis=1)  # 加上一个小的epsilon防止对0取对数
-        return cross_entropy_loss.tolist()
+def plot_3d_matrix(w_norm, p1):
+    """
+    and you need to change the upper bound and lower bound:
+    """
+    ...
 
-and you need to change the upper bound and lower bound:
+    z_high = 1 * 5000 * p1  # upper bound
+    z_low = 0.1 * 5000 * p1   # lower bound
+    ...
 
-    '''python
-
-    def plot_3d_matrix(w_norm, p1):
-        """
-        To show the scale problem
-        """
-        ...
-
-        z_high = 1 * 5000 * p1  # upper bound
-        z_low = 0.1 * 5000 * p1   # lower bound
-        ...
 
 ## Citation
 
