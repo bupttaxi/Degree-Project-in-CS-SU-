@@ -26,3 +26,29 @@ To run this code, you may need the following libraries or modules:
 - random
 
 GPU computing is recommended to reduce the training time. When you run this code, you only need to run it in your IDE (e.g., Spyder), and the plots will be shown in the plot window in Spyder.
+
+## Citation
+
+If you use this code in your research, please cite our thesis:
+
+@misc{xt2024thesis,
+  author = {Xin Tang},
+  title = {CIFAR-10 Classification Task Based on ResNet-18 and D-RISE Salience Map Analysis},
+  year = {2024},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/yourusername/your-repo-name}}
+}
+
+The D-RISE algorithm:
+
+@inproceedings{petsiuk2021black,
+  title={Black-box explanation of object detectors via saliency maps},
+  author={Petsiuk, Vitali and Jain, Rajiv and Manjunatha, Varun and Morariu, Vlad I and Mehra, Ashutosh and Ordonez, Vicente and Saenko, Kate},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={11443--11452},
+  year={2021}
+}
+
+## Contact
+For any questions or issues, please contact bupttaxi@gmail.com.
