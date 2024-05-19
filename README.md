@@ -27,6 +27,33 @@ To run this code, you may need the following libraries or modules:
 
 GPU computing is recommended to reduce the training time. When you run this code, you only need to run it in your IDE (e.g., Spyder), and the plots will be shown in the plot window in Spyder.
 
+## Defining Similarity Score
+
+You can define different methods to calculate similarity score e.g.
+
+'''python
+def similarity_calculation(proposals, selected_label):
+
+    """
+    DRISE 3: generating the similarity score using cross entropy
+    """
+
+    cross_entropy_loss = -np.sum(selected_label * np.log(proposals + 1e-9), axis=1)  # 加上一个小的epsilon防止对0取对数
+    return cross_entropy_loss.tolist()
+
+and you need to change the upper bound and lower bound:
+
+'''python
+def plot_3d_matrix(w_norm, p1):
+    """
+    To show the scale problem
+    """
+    ...
+
+    z_high = 1 * 5000 * p1  # upper bound
+    z_low = 0.1 * 5000 * p1   # lower bound
+    ...
+
 ## Citation
 
 If you use this code in your research, please cite our thesis:
