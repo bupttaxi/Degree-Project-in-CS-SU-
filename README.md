@@ -53,7 +53,7 @@ def plot_3d_matrix(w_norm, p1):
 
 ## Citation
 
-If you use this code in your research, please cite our thesis:
+If you use this code in your research, please cite:
 
 @misc{xt2024thesis,
   author = {Xin Tang},
