@@ -13,3 +13,17 @@ This thesis employs the ResNet-18 architecture for image classification on the C
 - Python 3.10.13
 - CUDA 11.2
 - cuDNN 8.1
+
+## Required Libraries and Modules
+
+To run this code, you may need the following libraries or modules:
+
+```python
+- tensorflow
+- numpy
+- matplotlib.pyplot
+- seaborn
+- scipy.ndimage
+- random
+
+GPU computing is recommended to reduce the training time. When you run this code, you only need to run it in your IDE (e.g., Spyder), and the plots will be shown in the plot window in Spyder.
