@@ -31,7 +31,7 @@ GPU computing is recommended to reduce the training time. When you run this code
 
 You can define different methods to calculate similarity score e.g.
 
-'''python
+    '''python
 
     def similarity_calculation(proposals, selected_label):
     
@@ -44,7 +44,7 @@ You can define different methods to calculate similarity score e.g.
 
 and you need to change the upper bound and lower bound:
 
-'''python
+    '''python
 
     def plot_3d_matrix(w_norm, p1):
         """
