@@ -51,6 +51,18 @@ def plot_3d_matrix(w_norm, p1):
 
 ```
 
+
+## Saliency Map for preset number of images in specific category and predicted class
+
+Use the function below to define by yourself
+```python
+saliency_map_for_classied_images(model, class_names, test_ds, test_images_original, 'cat', 'cat', 5, 0.5)
+```
+the first 'cat' is the true category
+the second 'cat' is the predicted class
+5 represents the number of images you want to generate saliency maps for
+0.5 represents the masking probability (P(1)) for the binary mask
+
 ## Citation
 
 If you use this code in your research, please cite:
