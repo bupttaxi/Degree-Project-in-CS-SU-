@@ -73,7 +73,7 @@ If you use this code in your research, please cite:
   year = {2024},
   publisher = {GitHub},
   journal = {GitHub repository},
-  howpublished = {\url{https://github.com/yourusername/your-repo-name}}
+  howpublished = {\url{https://github.com/yourusername/your-repo-name](https://github.com/bupttaxi/Degree-Project-in-CS-SU-}}
 }
 
 The D-RISE algorithm:
