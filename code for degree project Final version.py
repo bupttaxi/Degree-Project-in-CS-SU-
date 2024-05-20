@@ -52,9 +52,10 @@ class BasicBlock(tf.keras.Model):
         else:
             self.shortcut = lambda x: x
             
-    def call(self, x):
-        out = tf.keras.activations.relu(self.bn1(self.conv1(x)))
-        out = self.bn2(self.conv2(out))
+    @tf.autograph.experimental.do_not_convert        
+    def call(self, x, training=False):
+        out = tf.keras.activations.relu(self.bn1(self.conv1(x), training=training))
+        out = self.bn2(self.conv2(out), training=training)
         out = layers.add([self.shortcut(x), out])
         out = tf.keras.activations.relu(out)
         return out
@@ -78,12 +79,13 @@ class BuildResNet(tf.keras.Model):
         self.flatten = layers.Flatten()
         self.fc = layers.Dense(num_classes, activation='softmax')
     
-    def call(self, x):
-        out = tf.keras.activations.relu(self.bn1(self.conv1(x)))
-        out = self.layer1(out)
-        out = self.layer2(out)
-        out = self.layer3(out)
-        out = self.layer4(out)
+    @tf.autograph.experimental.do_not_convert
+    def call(self, x, training=False):
+        out = tf.keras.activations.relu(self.bn1(self.conv1(x), training=training))
+        out = self.layer1(out, training=training)
+        out = self.layer2(out, training=training)
+        out = self.layer3(out, training=training)
+        out = self.layer4(out, training=training)
         out = self.avg_pool2d(out)
         out = self.flatten(out)
         out = self.fc(out)
@@ -148,13 +150,21 @@ def normalize(images, mean, std):
 
 def dataset_generator(images, labels, batch_size):
     """
-    generate dataset by using data augmentation 
+    Generate dataset by using data augmentation and mix original images with augmented images
     """
-    ds = tf.data.Dataset.from_tensor_slices((images, labels))
-    ds = ds.map(_augment_fn, num_parallel_calls=tf.data.experimental.AUTOTUNE)
-    ds = ds.shuffle(len(images)).batch(batch_size)
-    ds = ds.prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
-    return ds
+    ds_original = tf.data.Dataset.from_tensor_slices((images, labels))
+    ds_augmented = tf.data.Dataset.from_tensor_slices((images, labels))
+    ds_augmented = ds_augmented.map(_augment_fn, num_parallel_calls=tf.data.experimental.AUTOTUNE)
+    
+    # Combine original and augmented datasets
+    ds_combined = ds_original.concatenate(ds_augmented)
+    
+    # Shuffle and batch the combined dataset
+    ds_combined = ds_combined.shuffle(len(images) * 2).batch(batch_size)
+    ds_combined = ds_combined.prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
+    
+    return ds_combined
+
 
 def _one_hot(train_labels, num_classes, dtype=np.float32):
     """
@@ -162,9 +172,11 @@ def _one_hot(train_labels, num_classes, dtype=np.float32):
     """
     return np.array(train_labels == np.arange(num_classes), dtype)
 
+
+@tf.autograph.experimental.do_not_convert
 def _augment_fn(images, labels):
     """
-    data augmentation skills
+    Data augmentation function
     """
     images = tf.image.pad_to_bounding_box(images, padding, padding, target_size, target_size)
     images = tf.image.random_crop(images, (image_size, image_size, 3))
@@ -196,7 +208,8 @@ def main(batch_size, learning_rate, optimizer_type, epoch):
     
     # apply data augmentation    
     train_ds = dataset_generator(train_images, train_labels, batch_size) 
-    valid_ds = dataset_generator(valid_images, valid_labels, batch_size)  # 创建验证数据集
+    
+    valid_ds = tf.data.Dataset.from_tensor_slices((valid_images, valid_labels)).batch(batch_size).prefetch(buffer_size=tf.data.experimental.AUTOTUNE)  # Add this line  
     test_ds = tf.data.Dataset.from_tensor_slices((test_images, test_labels)).batch(batch_size).prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
     
     # learning decay
